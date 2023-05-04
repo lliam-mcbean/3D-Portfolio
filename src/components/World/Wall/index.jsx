@@ -1,14 +1,14 @@
 import { Html } from '@react-three/drei'
+import { useLoader } from '@react-three/fiber'
 import React from 'react'
+import { TextureLoader } from 'three'
 
-export default function Wall({position, url, size}) {
+export default function Wall({position, url, size, rotation}) {
+  const screenmap = useLoader(TextureLoader, url)
   return (
-    <mesh position={position} rotation={[0, Math.PI / 2, 0]} >
-        <Html occlude transform>
-            <div className='w-100 h-100 bg-red-500 text-white'>
-                <iframe title="embed" width={size[0]} height={size[1]} src={url} />
-            </div>
-        </Html>
+    <mesh position={position} rotation={[rotation[0], (Math.PI / 2) + rotation[1], rotation[2]]}>
+       <planeGeometry args={size} />
+       <meshStandardMaterial map={screenmap}/>
     </mesh>
   )
 }

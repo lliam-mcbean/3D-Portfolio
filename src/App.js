@@ -1,12 +1,19 @@
 import { Canvas } from "@react-three/fiber";
+import { useState } from "react";
+import Loader from "./components/Loader";
 import World from "./components/World";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
+
   return (
     <div className='w-screen h-screen'>
-      <Canvas colorManagement shadows camera={{position: [50, 30, 50]}}>
-        <World />
-      </Canvas>
+      <div className="w-screen h-screen absolute">
+        <Canvas colorManagement shadows camera={{position: [50, 30, 50]}}>
+          <World />
+        </Canvas>
+      </div>
+      {isLoading && <Loader setIsLoading={setIsLoading} />}
     </div>
   );
 }

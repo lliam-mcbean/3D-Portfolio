@@ -4,12 +4,12 @@ import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 
-export default function Ball({cursor, spotLight}) {
+export default function Ball({cursor, spotLight, }) {
     const [ref, api] = useSphere(() => ({
-        mass: 0.1,
+        mass: 1,
 
-        args: [1, 32, 32],
-        position: [(Math.random() * -20), Math.random() * 2, (Math.random() * -20)],
+        args: [2, 32, 32],
+        position: [(Math.random() * -20), Math.random() * 2 + 5, (Math.random() * -20)],
         material: {restitution: 1, friction: 0.1}
     }))
     const pos = useRef({})
@@ -27,7 +27,7 @@ export default function Ball({cursor, spotLight}) {
         api.applyForce(vec2.toArray(), pos.current)
 
         // force applied to position of cursor, dependant on distance to cursor
-        const vec3 = new THREE.Vector3((cursor.current[0] - pos.current[0]), -1, (cursor.current[2] - pos.current[2]))
+        const vec3 = new THREE.Vector3((cursor.current[0] - pos.current[0]), 0, (cursor.current[2] - pos.current[2]))
         api.applyForce(vec3.toArray(), pos.current)
 
         // camera follows object3d
@@ -36,10 +36,11 @@ export default function Ball({cursor, spotLight}) {
         // spotlight follows and targets object
         spotLight.current && spotLight.current.position.set(cursor.current[0], 20, cursor.current[2])
         spotLight.current.target = ref.current
+        api.rotation.set(0,0,0)
     })
     return (
         <mesh ref={ref} castShadow>
-            <sphereGeometry args={[1, 32, 32]} />
+            <sphereGeometry args={[2, 32, 32]} />
             <meshStandardMaterial attach='material' color='lightblue' />
         </mesh>
     )
