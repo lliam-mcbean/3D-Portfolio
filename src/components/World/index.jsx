@@ -16,7 +16,7 @@ import { Html } from '@react-three/drei'
 import Loader from '../Loader'
 
 export default function World() {
-  const [screen1, setScreen1] = useState(false)
+  const [onScreen, setOnScreen] = useState(false)
 
   const cursor = useRef([15,0,0])
   const spotLight = useRef()
@@ -29,8 +29,8 @@ export default function World() {
             <Floor cursor={cursor} color={'white'} position={[0, 0, -100]}/>
             <Floor cursor={cursor} color={'white'} position={[0, 0, -200]}/>
             {/* <Shaders /> */}
-            <Wall position={[-41.75, 41.5, -99.7]} url={"./textures/blackhole.jpg"} size={[124, 64.5]} rotation={[0,0.01,0]}/>
-            <Ball cursor={cursor} spotLight={spotLight}/>
+            <Wall position={[-41.75, 41.5, -99.7]} onScreen={onScreen} url={"https://www.spacejam.com/1996/"} size={[124, 64.5]} rotation={[0,0.01,0]} setOnScreen={setOnScreen}/>
+            <Ball cursor={cursor} spotLight={spotLight} onScreen={onScreen}/>
             {pins.coords.map((el, i) => <Model key={`pin-${i}`} size={[1, 3, 1]} position={[el[0] - 41, el[1] + 20, el[2] + 141]} model={'/models/pin.gltf'} />)}
             <Desk size={[100,100,100]} position={[-10,0,5]} model={'/models/desk.gltf'} />
             <Box args={[50, 1, 10]} position={[0, 9.7, 30]} rotation={[0, 0, -Math.PI / 8]} />

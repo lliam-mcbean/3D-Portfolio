@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 
-export default function Ball({cursor, spotLight, }) {
+export default function Ball({cursor, spotLight, onScreen}) {
     const [ref, api] = useSphere(() => ({
         mass: 1,
 
@@ -22,6 +22,18 @@ export default function Ball({cursor, spotLight, }) {
 
     
     useFrame(({camera}) => {
+        if (!onScreen) {
+            // camera follows object3d
+            camera.position.set(50 + pos.current[0], 30 + pos.current[1], 50 + pos.current[2])
+            camera.rotation.setFromVector3(new THREE.Vector3(
+                -0.5404195002705843,
+                0.7088280414581604,
+                0.3723478924339099
+                ))
+        } else {
+            camera.position.set(100, 50, -100)
+            camera.rotation.set(0,Math.PI / 2,0)
+        }
         // frictional force to slow particle down
         const vec2 = new THREE.Vector3(-vel.current[0], 0, -vel.current[2])
         api.applyForce(vec2.toArray(), pos.current)
@@ -29,9 +41,6 @@ export default function Ball({cursor, spotLight, }) {
         // force applied to position of cursor, dependant on distance to cursor
         const vec3 = new THREE.Vector3((cursor.current[0] - pos.current[0]), 0, (cursor.current[2] - pos.current[2]))
         api.applyForce(vec3.toArray(), pos.current)
-
-        // camera follows object3d
-        camera.position.set(50 + pos.current[0], 30 + pos.current[1], 50 + pos.current[2])
 
         // spotlight follows and targets object
         spotLight.current && spotLight.current.position.set(cursor.current[0], 20, cursor.current[2])
