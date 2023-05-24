@@ -13,7 +13,7 @@ export default function Wall({position, url, size, rotation, setOnScreen, htmlPo
         {onScreen &&
         <Html position={htmlPosition} transform scale={5} >
           <div className='overflow-hidden w-[1000px] relative'>
-            <iframe className='w-[1000px] left-[100px] h-[530px]' src={url} frameborder="0"></iframe>
+            <iframe style={{border: 'inset'}} className='w-[990px] ml-[6px] mt-[7px] h-[530px]' src={url} frameborder="0"></iframe>
           </div>
         </Html>
         }

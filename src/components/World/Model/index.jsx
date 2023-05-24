@@ -11,7 +11,7 @@ export default function Model({position,  model, size}) {
     const [ref, api] = useBox(() => ({
         args: size,
         mass: 0.1,
-        position: [...position],
+        position: position,
         material: {restitution: 1, friction: 0.1}
     }))
     return (
