@@ -14,6 +14,7 @@ import Box from './Box'
 import Lights from '../Lights'
 import { Html } from '@react-three/drei'
 import Loader from '../Loader'
+import Sky from './Sky'
 
 export default function World() {
   const [onScreen, setOnScreen] = useState(false)
@@ -24,6 +25,7 @@ export default function World() {
   return (
       <Suspense fallback={null}>
         <Lights spotLight={spotLight} />
+        <Sky />
         <Physics gravity={[0, -40, 0]}>
             <Floor cursor={cursor} color={'white'} position={[0,0,0]} />
             <Floor cursor={cursor} color={'white'} position={[0, 0, -100]}/>

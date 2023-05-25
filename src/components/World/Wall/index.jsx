@@ -1,13 +1,23 @@
 import { Html } from '@react-three/drei'
 import { useLoader } from '@react-three/fiber'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextureLoader } from 'three'
 
 export default function Wall({position, url, size, rotation, setOnScreen, htmlPosition, onScreen}) {
-  const screenmap = useLoader(TextureLoader, './textures/blackhole.jpg')
+  const screenmap = useLoader(TextureLoader, './textures/login.png')
+  const [cursor, setCursor] = useState(false)
+
+  useEffect(() => {
+    if (cursor) {
+      document.body.style.cursor = 'pointer'
+    } else {
+      document.body.style.cursor = 'auto'
+    }
+  }, [cursor])
+
   return (
     <>
-    <mesh onClick={() => setOnScreen(prev => !prev)} position={position} rotation={[rotation[0], (Math.PI / 2) + rotation[1], rotation[2]]}>
+    <mesh onPointerOver={() => setCursor(true)} onPointerOut={() => setCursor(false)} onPointerMissed={() => setCursor(false)} onClick={() => setOnScreen(prev => !prev)} position={position} rotation={[rotation[0], (Math.PI / 2) + rotation[1], rotation[2]]}>
        <planeGeometry args={size} />
        <meshStandardMaterial map={screenmap}/>
         {onScreen &&

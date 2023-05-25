@@ -9,7 +9,7 @@ function App() {
   return (
     <div className='w-screen h-screen'>
       <div className="w-screen h-screen absolute">
-        <Canvas colorManagement shadows camera={{position: [50, 30, 50]}}>
+        <Canvas colorManagement shadows camera={{position: [50, 30, 50], far: 5000}}>
           <World />
         </Canvas>
       </div>
