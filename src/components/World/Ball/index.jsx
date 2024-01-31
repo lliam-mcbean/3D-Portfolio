@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 
-export default function Ball({cursor, spotLight, onScreen}) {
+export default function Ball({cursor, spotLight, onScreen, onScreen2}) {
     const [ref, api] = useSphere(() => ({
         mass: 1,
 
@@ -22,7 +22,8 @@ export default function Ball({cursor, spotLight, onScreen}) {
 
     
     useFrame(({camera}) => {
-        if (!onScreen) {
+        if (api.position) {
+                    if (!onScreen) {
             // camera follows object3d
             camera.position.set(50 + pos.current[0], 30 + pos.current[1], 50 + pos.current[2])
             camera.rotation.setFromVector3(new THREE.Vector3(
@@ -30,6 +31,9 @@ export default function Ball({cursor, spotLight, onScreen}) {
                 0.7088280414581604,
                 0.3723478924339099
                 ))
+        } else if (onScreen2) {
+            camera.position.set(40, 50, -140)
+            camera.rotation.set(0,Math.PI / 5,0)
         } else {
             camera.position.set(100, 50, -100)
             camera.rotation.set(0,Math.PI / 2,0)
@@ -46,6 +50,7 @@ export default function Ball({cursor, spotLight, onScreen}) {
         spotLight.current && spotLight.current.position.set(cursor.current[0], 20, cursor.current[2])
         spotLight.current.target = ref.current
         api.rotation.set(0,0,0)
+        }
     })
     return (
         <mesh ref={ref} castShadow>
