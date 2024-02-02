@@ -51,6 +51,8 @@ export default function Ball({cursor, spotLight, onScreen, onScreen2}) {
         spotLight.current.target = ref.current
         api.rotation.set(0,0,0)
         }
+
+        console.log('position: ', pos.current)
     })
     return (
         <mesh ref={ref} castShadow>

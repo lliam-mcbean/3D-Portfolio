@@ -31,6 +31,7 @@ export default function World() {
             <Floor cursor={cursor} color={'white'} position={[0, 0, -100]}/>
             <Floor cursor={cursor} color={'white'} position={[0, 0, -200]}/>
             {/* <Shaders /> */}
+            <Model scale={[10,10,10]} size={[7, 12, 7]} position={[10,8,-175]} model={'/models/soda.gltf'} />
             <Wall position={[-41.75, 41.5, -99.7]} onScreen={onScreen} url={"http://localhost:3001/"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[124, 64.5]} rotation={[0,0.01,0]} setOnScreen={setOnScreen}/>
             <Painting position={[-12, 51, -228]} size={[50, 94.5]} rotation={[0,-0.978,0.005]} />
             <Ball cursor={cursor} spotLight={spotLight} onScreen={onScreen} onScreen2={onScreen2}/>
