@@ -5,19 +5,18 @@ import Floor from './Floor'
 import Ball from './Ball'
 import { useRef } from 'react'
 import Model from './Model'
-
 import {pins} from '../../data/pins'
-import Shaders from '../Shaders'
 import Wall from './Wall'
 import Desk from './Desk'
 import Box from './Box'
 import Lights from '../Lights'
-import { Html } from '@react-three/drei'
-import Loader from '../Loader'
 import Sky from './Sky'
+import Painting from './Painting'
+import { OrbitControls } from '@react-three/drei'
 
 export default function World() {
   const [onScreen, setOnScreen] = useState(false)
+  const [onScreen2, setOnScreen2] = useState(false)
 
   const cursor = useRef([15,0,0])
   const spotLight = useRef()
@@ -27,12 +26,15 @@ export default function World() {
         <Lights spotLight={spotLight} />
         <Sky />
         <Physics gravity={[0, -40, 0]}>
-            <Floor cursor={cursor} color={'white'} position={[0,0,0]} />
+          <Debug>
+          <Floor cursor={cursor} color={'white'} position={[0,0,0]} />
             <Floor cursor={cursor} color={'white'} position={[0, 0, -100]}/>
             <Floor cursor={cursor} color={'white'} position={[0, 0, -200]}/>
             {/* <Shaders /> */}
-            <Wall position={[-41.75, 41.5, -99.7]} onScreen={onScreen} url={"http://localhost:3001/"} size={[124, 64.5]} rotation={[0,0.01,0]} setOnScreen={setOnScreen}/>
-            <Ball cursor={cursor} spotLight={spotLight} onScreen={onScreen}/>
+            <Model scale={[10,10,10]} size={[7, 12, 7]} position={[10,8,-175]} model={'/models/soda.gltf'} />
+            <Wall position={[-41.75, 41.5, -99.7]} onScreen={onScreen} url={"http://localhost:3001/"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[124, 64.5]} rotation={[0,0.01,0]} setOnScreen={setOnScreen}/>
+            <Painting position={[-12, 51, -228]} size={[50, 94.5]} rotation={[0,-0.978,0.005]} />
+            <Ball cursor={cursor} spotLight={spotLight} onScreen={onScreen} onScreen2={onScreen2}/>
             {pins.coords.map((el, i) => <Model key={`pin-${i}`} size={[1, 3, 1]} position={[el[0] - 41, el[1] + 20, el[2] + 141]} model={'/models/pin.gltf'} />)}
             <Desk size={[100,100,100]} position={[-10,0,5]} model={'/models/desk.gltf'} />
             <Box args={[50, 1, 10]} position={[0, 9.7, 30]} rotation={[0, 0, -Math.PI / 8]} />
@@ -43,6 +45,7 @@ export default function World() {
             <Box args={[1, 22, 44]} position={[-43, 28, 14.3]} rotation={[0, 0, 0]} transparent={true} />
             <Box args={[47, 1, 134]} position={[20,0,-100]} rotation={[0, 0, 0]} transparent={true} />
             <Box args={[18, 12, 58]} position={[30,0,-101]} rotation={[0, 0, 0]} transparent={true} />
+          </Debug>
         </Physics>
       </Suspense>
   )

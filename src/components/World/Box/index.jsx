@@ -10,9 +10,7 @@ export default function Box({args, rotation, position, transparent}) {
         material: {restitution: 0.1, friction: 0.1}
     }))
   return (
-   <mesh ref={ref} onPointerMove={(e) => {
-    console.log(e.point)
-   }}>
+   <mesh ref={ref} >
     <boxGeometry args={args} />
     <meshStandardMaterial color={'black'} transparent={transparent} opacity={0} />
    </mesh>

@@ -1,7 +1,10 @@
 import { Canvas } from "@react-three/fiber";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "./components/Loader";
 import World from "./components/World";
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://127.0.0.1:8000'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
