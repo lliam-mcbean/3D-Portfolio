@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 
-export default function Ball({cursor, spotLight, onScreen, onScreen2}) {
+export default function Ball({cursor, spotLight, onScreen, onScreen2, onWall}) {
     const [ref, api] = useSphere(() => ({
         mass: 1,
 
@@ -23,14 +23,17 @@ export default function Ball({cursor, spotLight, onScreen, onScreen2}) {
     
     useFrame(({camera}) => {
         if (api.position) {
-                    if (!onScreen) {
+            if (!onScreen && !onWall) {
             // camera follows object3d
-            camera.position.set(50 + pos.current[0], 30 + pos.current[1], 50 + pos.current[2])
+            camera.position.set(100 + pos.current[0], 60 + pos.current[1], 100 + pos.current[2])
             camera.rotation.setFromVector3(new THREE.Vector3(
                 -0.5404195002705843,
                 0.7088280414581604,
                 0.3723478924339099
                 ))
+        } else if (onWall) {
+            camera.position.set(150, 100, 0)
+            camera.rotation.set(0,Math.PI / 2,0)
         } else if (onScreen2) {
             camera.position.set(40, 50, -140)
             camera.rotation.set(0,Math.PI / 5,0)
