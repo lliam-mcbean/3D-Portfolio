@@ -1,0 +1,74 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Line, Html } from '@react-three/drei'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import * as THREE from 'three'
+import { faT, faTrash } from '@fortawesome/free-solid-svg-icons'
+
+export default function Painting({position, size, rotation, setDrawingsCallback}) {
+  const [isDrawing, setIsDrawing] = useState(false)
+  const [userDrawings, setUserDrawings] = useState([])
+  const [drawing, setDrawing] = useState([])
+
+  useEffect(() => {
+    axios.get('/drawings').then((res) => {
+      if (res.status === 200) {
+        setUserDrawings(res.data)
+      }
+    })
+  }, [])
+
+  const convertCoords = (coords) => {
+    const returnValue = coords.map((el) => [el.x, el.y, el.z])
+    return returnValue
+  }
+
+  const submitDrawing = () => {
+    const convertedCoords = convertCoords(drawing)
+    axios.post('/drawings', {data: convertedCoords}).then((res) => {
+      if (res.status === 200) {
+        axios.get('/drawings').then((res) => setDrawingsCallback(res))
+      }
+    })
+  }
+
+  return (
+    <>
+    <mesh
+    onPointerDown={() => {
+      setIsDrawing(true)
+    }}
+    onPointerUp={() => {
+      setIsDrawing(false)
+    }}
+    onPointerLeave={() => {
+      setIsDrawing(false)
+    }}
+    onPointerMove={((e) => {
+      if (isDrawing) {
+        setDrawing((prev) => [...prev, e.point])
+      }
+    })} position={position} rotation={[rotation[0], (Math.PI / 2) + rotation[1], rotation[2]]}>
+       <planeGeometry args={size} />
+       <meshBasicMaterial />
+      </mesh>
+      <Html position={[position[0], position[1] - 70, position[2] - 50]} rotation={[rotation[0], (Math.PI / 2) - rotation[1], rotation[2]]}>
+        <div className='flex'>
+          <div className='p-2 mx-2 border border-2 rounded cursor-pointer text-white hover:text-red-500 ' onClick={() => setDrawing([])}>
+            <FontAwesomeIcon icon={faTrash} />
+          </div>
+        <div onClick={() => {
+          submitDrawing()
+        }} className='cursor-pointer w-max p-2 border border-2 rounded text-white hover:text-green-500'>Post it!</div>
+        </div>
+      </Html>
+      <mesh>
+						<Line
+							points={drawing.length > 0 ? drawing : [new THREE.Vector3(0,0,0)]}
+							color={0x00ff00}
+							lineWidth={1.5}
+						/>
+			</mesh>
+    </>
+  )
+}

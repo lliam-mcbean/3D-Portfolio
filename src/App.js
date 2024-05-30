@@ -2,6 +2,9 @@ import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
 import Loader from "./components/Loader";
 import World from "./components/World";
+import axios from 'axios'
+
+axios.defaults.baseURL = 'https://wasteful-gloriana-lliammcbean-f43f8812.koyeb.app/'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
