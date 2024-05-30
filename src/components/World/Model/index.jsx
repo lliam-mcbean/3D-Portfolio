@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useLoader } from '@react-three/fiber'
 import { useBox } from '@react-three/cannon'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
@@ -8,7 +8,7 @@ export default function Model({position,  model, size, scale, onClick, fixed}) {
     const gltf = useLoader(GLTFLoader, model)
     const gltfClone = gltf.scene.clone()
 
-    const [ref, api] = useBox(() => ({
+    const [ref] = useBox(() => ({
         args: size,
         mass: 0.1,
         position: position,

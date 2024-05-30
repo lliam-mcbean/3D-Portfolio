@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Html } from '@react-three/drei'
 import { useLoader } from '@react-three/fiber'
 import React, { useEffect, useState } from 'react'
@@ -23,7 +24,7 @@ export default function Wall({position, url, size, rotation, setOnScreen, htmlPo
         {onScreen &&
         <Html position={htmlPosition} transform scale={5} >
           <div className='overflow-hidden w-[1000px] relative'>
-            <iframe style={{border: 'inset'}} className='w-[990px] ml-[6px] mt-[7px] h-[530px]' src={url} frameborder="0"></iframe>
+            <iframe title='screen1' style={{border: 'inset'}} className='w-[990px] ml-[6px] mt-[7px] h-[530px]' src={url} frameborder="0"></iframe>
           </div>
           <div className={`absolute right-[-180px] rounded-full bg-green-500 top-64 z-10 cursor-pointer text-red-500 ${onScreen2 ? 'rotate-180' : 'rotate-0'}`} onClick={() => {
             if (onScreen2) {

@@ -1,6 +1,4 @@
-import { Debug, Physics, useSphere } from '@react-three/cannon'
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
-import * as THREE from 'three'
+import { Debug, Physics } from '@react-three/cannon'
 import React, { Suspense, useEffect, useState } from 'react'
 import Floor from './Floor'
 import Ball from './Ball'
@@ -9,11 +7,10 @@ import Model from './Model'
 import {pins} from '../../data/pins'
 import Wall from './Wall'
 import Desk from './Desk'
-import Box from './Box'
 import Lights from '../Lights'
 import Sky from './Sky'
 import Painting from './Painting'
-import { Line, OrbitControls } from '@react-three/drei'
+import { Line } from '@react-three/drei'
 import axios from 'axios'
 import Screen2 from './Wall/Screen2'
 import FixedModel from './FixedModel'
@@ -79,6 +76,7 @@ export default function World() {
 
   useEffect(() => {
     axios.get('/drawings').then((res) => setDrawingsCallback(res))
+    /* eslint-disable-next-line*/
   }, [])
   return (
       <Suspense fallback={null}>
@@ -92,10 +90,9 @@ export default function World() {
             {/* <Shaders /> */}
             {postIts.length > 0 && postIts}
             <Model scale={[10,10,10]} size={[7, 15, 7]} position={[10,8,-175]} model={'/models/soda.gltf'} />
-            {/* <Model scale={[10,10,10]} size={[7, 12, 7]} position={[10,20,-175]} model={'/models/spaceship.gltf'} /> */}
             <Model scale={[10,10,10]} size={[7, 12, 7]} position={[10,8,0]} model={'/models/soda.gltf'} onClick={() => setOnWall((prev) => !prev)}/>
-            {/* <Wall position={[-41.75, 41.5, -99.7]} onScreen={onScreen} url={"https://windows-homepage.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[124, 64.5]} rotation={[0,0.01,0]} setOnScreen={setOnScreen}/> */}
-            {/* <Screen2 position={[-13, 50.5, -226.5]} onScreen={onScreen} url={"https://lliam-resume.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[50, 93]} rotation={[0.012,-0.972,0]} setOnScreen={setOnScreen}/> */}
+            <Wall position={[-41.75, 41.5, -99.7]} onScreen={onScreen} url={"https://windows-homepage.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[124, 64.5]} rotation={[0,0.01,0]} setOnScreen={setOnScreen}/>
+            <Screen2 position={[-13, 50.5, -226.5]} onScreen={onScreen} url={"https://lliam-resume.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[50, 93]} rotation={[0.012,-0.972,0]} setOnScreen={setOnScreen}/>
             <Painting position={[-60, 174, 9]} size={[95, 110]} rotation={[0,0,0]} setDrawingsCallback={setDrawingsCallback} />
             <Ball cursor={cursor} spotLight={spotLight} onScreen={onScreen} onScreen2={onScreen2} onWall={onWall}/>
             {pins.coords.map((el, i) => <Model key={`pin-${i}`} size={[1, 3, 1]} position={[el[0] - 41, el[1] + 20, el[2] + 141]} model={'/models/pin.gltf'} />)}

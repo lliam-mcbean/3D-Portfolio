@@ -1,4 +1,3 @@
-import { Html, useProgress } from '@react-three/drei'
 import React, { useEffect, useState } from 'react'
 
 export default function Loader({setIsLoading}) {
@@ -6,9 +5,6 @@ export default function Loader({setIsLoading}) {
     const [secondStage, setSecondStage] = useState(0)
     const [thirdStage, setThirdStage] = useState(0)
     const [fourthStage, setFourthStage] = useState(0)
-    const [final, setFinal] = useState(false)
-
-    const {progress} = useProgress()
 
     const animate = () => {
         for(let i = 0; i < 230; i++) {
@@ -30,6 +26,7 @@ export default function Loader({setIsLoading}) {
 
     useEffect(() => {
         fourthStage === 0 && animate()
+        // eslint-disable-next-line
     }, [])
 
     return (

@@ -1,16 +1,9 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useLoader } from '@react-three/fiber'
-import { useBox } from '@react-three/cannon'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { TextureLoader } from 'three'
-import * as THREE from 'three'
 
 
-export default function Desk({position,  model, size}) {
-    const texture = useLoader(TextureLoader, '/textures/baked.jpg')
-    const material = new THREE.MeshBasicMaterial({map: texture})
-
-
+export default function Desk({position,  model }) {
     const gltf = useLoader(GLTFLoader, model)
 
     return (

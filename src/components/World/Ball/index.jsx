@@ -18,6 +18,7 @@ export default function Ball({cursor, spotLight, onScreen, onScreen2, onWall}) {
     useEffect(() => {
         api.position.subscribe(v => pos.current = v)
         api.velocity.subscribe(v => vel.current = v)
+        // eslint-disable-next-line
     }, [])
 
     

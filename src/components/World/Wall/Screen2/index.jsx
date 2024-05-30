@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Html } from '@react-three/drei'
 import { useLoader } from '@react-three/fiber'
 import React, { useEffect, useState } from 'react'
@@ -22,7 +23,7 @@ export default function Screen2({position, url, size, rotation, setOnScreen, htm
        <meshStandardMaterial transparent opacity={0}/>
         <Html position={htmlPosition} transform scale={5} >
           <div className='overflow-hidden w-[1000px] relative'>
-            <iframe style={{border: 'inset'}} className='w-[395px] ml-[300px] mt-[7px] h-[750px]' src={url} frameborder="0"></iframe>
+            <iframe title='screen2' style={{border: 'inset'}} className='w-[395px] ml-[300px] mt-[7px] h-[750px]' src={url} frameborder="0"></iframe>
           </div>
         </Html>
     </mesh>
