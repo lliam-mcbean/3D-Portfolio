@@ -1,9 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Line, Html } from '@react-three/drei'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import * as THREE from 'three'
+import { faT, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-export default function Painting({position, size, rotation}) {
+export default function Painting({position, size, rotation, setDrawingsCallback}) {
   const [isDrawing, setIsDrawing] = useState(false)
   const [userDrawings, setUserDrawings] = useState([])
   const [drawing, setDrawing] = useState([])
@@ -13,7 +15,6 @@ export default function Painting({position, size, rotation}) {
       if (res.status === 200) {
         setUserDrawings(res.data)
       }
-      console.log('axios response', res)
     })
   }, [])
 
@@ -25,7 +26,9 @@ export default function Painting({position, size, rotation}) {
   const submitDrawing = () => {
     const convertedCoords = convertCoords(drawing)
     axios.post('/drawings', {data: convertedCoords}).then((res) => {
-      console.log('this is the drawing submit', res)
+      if (res.status === 200) {
+        axios.get('/drawings').then((res) => setDrawingsCallback(res))
+      }
     })
   }
 
@@ -47,12 +50,17 @@ export default function Painting({position, size, rotation}) {
       }
     })} position={position} rotation={[rotation[0], (Math.PI / 2) + rotation[1], rotation[2]]}>
        <planeGeometry args={size} />
-       <meshBasicMaterial transparent opacity={0}/>
+       <meshBasicMaterial />
       </mesh>
-      <Html position={[position[0] + 30, position[1] - 35, position[2] + 10]} rotation={[rotation[0], (Math.PI / 2) - rotation[1], rotation[2]]}>
+      <Html position={[position[0], position[1] - 70, position[2] - 50]} rotation={[rotation[0], (Math.PI / 2) - rotation[1], rotation[2]]}>
+        <div className='flex'>
+          <div className='p-2 mx-2 border border-2 rounded cursor-pointer text-white hover:text-red-500 ' onClick={() => setDrawing([])}>
+            <FontAwesomeIcon icon={faTrash} />
+          </div>
         <div onClick={() => {
           submitDrawing()
-        }} className='bg-red-500 cursor-pointer'>submit</div>
+        }} className='cursor-pointer w-max p-2 border border-2 rounded text-white hover:text-green-500'>Post it!</div>
+        </div>
       </Html>
       <mesh>
 						<Line
@@ -60,13 +68,6 @@ export default function Painting({position, size, rotation}) {
 							color={0x00ff00}
 							lineWidth={1.5}
 						/>
-            {userDrawings.length > 0 &&
-            userDrawings.map((el) => <Line 
-              points={el.map((coord) => new THREE.Vector3(...coord))}
-              color={0x00ff00}
-              lineWidth={1.5}
-            />)
-            }
 			</mesh>
     </>
   )
