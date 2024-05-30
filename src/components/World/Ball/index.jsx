@@ -22,10 +22,10 @@ export default function Ball({cursor, spotLight, onScreen, onScreen2, onWall}) {
 
     
     useFrame(({camera}) => {
-        if (api.position) {
+        if (api && api.position) {
             if (!onScreen && !onWall) {
             // camera follows object3d
-            camera.position.set(100 + pos.current[0], 60 + pos.current[1], 100 + pos.current[2])
+            camera.position.set(66 + pos.current[0], 40 + pos.current[1], 66 + pos.current[2])
             camera.rotation.setFromVector3(new THREE.Vector3(
                 -0.5404195002705843,
                 0.7088280414581604,
@@ -42,20 +42,18 @@ export default function Ball({cursor, spotLight, onScreen, onScreen2, onWall}) {
             camera.rotation.set(0,Math.PI / 2,0)
         }
         // frictional force to slow particle down
-        const vec2 = new THREE.Vector3(-vel.current[0], 0, -vel.current[2])
-        api.applyForce(vec2.toArray(), pos.current)
+        const vec2 = [-vel.current[0], 0, -vel.current[2]]
+        api.applyForce(vec2, pos.current)
 
         // force applied to position of cursor, dependant on distance to cursor
-        const vec3 = new THREE.Vector3((cursor.current[0] - pos.current[0]), 0, (cursor.current[2] - pos.current[2]))
-        api.applyForce(vec3.toArray(), pos.current)
+        const vec3 = [(cursor.current[0] - pos.current[0]), 0, (cursor.current[2] - pos.current[2])]
+        api.applyForce(vec3, pos.current)
 
         // spotlight follows and targets object
         spotLight.current && spotLight.current.position.set(cursor.current[0], 20, cursor.current[2])
         spotLight.current.target = ref.current
         api.rotation.set(0,0,0)
         }
-
-        console.log('position: ', pos.current)
     })
     return (
         <mesh ref={ref} castShadow>
