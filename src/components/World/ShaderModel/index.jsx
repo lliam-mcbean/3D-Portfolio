@@ -22,7 +22,7 @@ export default function ShaderModel({fragment, vertex, position, rotation, model
           },
           uColor: {value: new THREE.Color('red')},
           uResolution: {value: new THREE.Vector2(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio)},
-        }), []
+        }), [sizes.width, sizes.pixelRatio, sizes.height]
       );
 
     useFrame(({clock}) => {
