@@ -16,7 +16,7 @@ function App() {
           <World />
         </Canvas>
       </div>
-      {isLoading && <Loader setIsLoading={setIsLoading} />}
+      {/* {isLoading && <Loader setIsLoading={setIsLoading} />} */}
     </div>
   );
 }
