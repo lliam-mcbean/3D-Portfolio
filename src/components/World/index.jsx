@@ -1,4 +1,4 @@
-import { Debug, Physics } from '@react-three/cannon'
+import { Physics } from '@react-three/cannon'
 import React, { Suspense, useEffect, useState } from 'react'
 import Floor from './Floor'
 import Ball from './Ball'
@@ -103,7 +103,6 @@ export default function World() {
         <Lights spotLight={spotLight} />
         <Sky />
         <Physics gravity={[0, -40, 0]}>
-          <Debug>
           <Floor cursor={cursor} color={'white'} position={[0,0,0]} />
             <Floor cursor={cursor} color={'white'} position={[0, 0, -100]}/>
             <Floor cursor={cursor} color={'white'} position={[0, 0, -200]}/>
@@ -115,15 +114,13 @@ export default function World() {
             <Model scale={[10,10,10]} size={[7, 15, 7]} position={[0,7,-20]} model={'/models/soda.gltf'} />
             <FixedModel fixed scale={[7,7,7]} size={[7, 15, 7]} rotation={[0, Math.PI / 2, 0]} position={[30,6,-90]} model={'/models/keyboard.gltf'} />
             <FixedModel fixed scale={[4,4,4]} rotation={[0, Math.PI / 2, 0]} position={[30,2,-130]} model={'/models/mouse.gltf'} />
-            <Wall position={[-41.75, 41.5, -99.7]} onScreen={onScreen} url={"https://windows-homepage.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[124, 64.5]} rotation={[0,0.01,0]} setOnScreen={setOnScreen}/>
+            <Wall position={[-43, 40, -98.7]} onScreen={onScreen} url={"https://windows-homepage.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[121.5, 66.5]} rotation={[0,0,0]} setOnScreen={setOnScreen}/>
             <Screen2 position={[-13, 50.5, -226.5]} onScreen={onScreen} url={"https://lliam-resume.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[50, 93]} rotation={[0.012,-0.972,0]} setOnScreen={setOnScreen}/>
             <Painting position={[-60, 174, 9]} size={[95, 110]} rotation={[0,0,0]} setDrawingsCallback={setDrawingsCallback} />
             <Ball cursor={cursor} spotLight={spotLight} onScreen={onScreen} onScreen2={onScreen2} onWall={onWall}/>
             {pins.coords.map((el, i) => <Model key={`pin-${i}`} size={[1, 3, 1]} position={[el[0] - 41, el[1] + 20, el[2] + 141]} model={'/models/pin.gltf'} />)}
 
             <Desk size={[100,100,100]} position={[-10,0,5]} model={'/models/desk.gltf'} />
-            
-          </Debug>
         </Physics>
       </Suspense>
   )
