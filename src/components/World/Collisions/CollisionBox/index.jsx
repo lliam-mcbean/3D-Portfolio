@@ -2,7 +2,7 @@ import { useBox } from '@react-three/cannon'
 import React from 'react'
 
 export default function CollisionBox({position, args}) {
-    const [ref, api] = useBox(() => ({
+    const [ref] = useBox(() => ({
         mass: 0,
         args: args,
         position: position,
