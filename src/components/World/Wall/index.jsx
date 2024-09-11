@@ -26,17 +26,17 @@ export default function Wall({position, url, size, rotation, setOnScreen, htmlPo
           <div className='overflow-hidden w-[970px] relative'>
             <iframe title='screen1' style={{border: 'inset'}} className='w-[990px] ml-[6px] h-[540px]' src={url} frameborder="0"></iframe>
           </div>
-          <div className={`absolute right-[-180px] rounded-full bg-green-500 top-64 z-10 cursor-pointer text-red-500 ${onScreen2 ? 'rotate-180' : 'rotate-0'}`} onClick={() => {
+          <div className={`absolute right-[-180px] rounded-full top-64 z-10 cursor-pointer text-white ${onScreen2 ? 'rotate-180' : 'rotate-0'}`} onClick={() => {
             if (onScreen2) {
               setOnScreen2(false)
             } else {
               setOnScreen2(true)
             }
           }}>
-            <img className='fill-red-500 w-24 h-24' src="./arrow.svg" alt="" />
+            <img className='fill-white w-24 text-white h-24' src="./arrow.svg" alt="" />
           </div>
-          <div onClick={() => setOnScreen(false)} className='cursor-pointer absolute top-0 left-[-180px] bg-green-500 rounded-full'>
-            <img className=' w-24 h-24' src="./x.svg" alt="" />
+          <div onClick={() => setOnScreen(false)} className='cursor-pointer absolute w-[150px] top-0 left-[-200px] p-4 text-2xl text-center border border-2 border-white rounded text-white'>
+            EXPLORE THE DESK
           </div>
         </Html>
         }
