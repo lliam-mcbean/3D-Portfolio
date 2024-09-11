@@ -22,7 +22,7 @@ import pointLight from '../../shaders/includes/pointLight.glsl'
 import directionalLight from '../../shaders/includes/directionalLight.glsl'
 import halftoneFragment from '../../shaders/halftone/fragment.glsl'
 import halftoneVertex from '../../shaders/halftone/vertex.glsl'
-import { useFrame } from '@react-three/fiber'
+import Collisions from './Collisions'
 
 const newHalftoneFragment = `
   ${ambientLight}
@@ -32,12 +32,10 @@ const newHalftoneFragment = `
 `
 
 export default function World() {
-  const [onScreen, setOnScreen] = useState(false)
+  const [onScreen, setOnScreen] = useState(true)
   const [onScreen2, setOnScreen2] = useState(false)
   const [onWall, setOnWall] = useState(false)
   const [postIts, setPostIts] = useState([])
-
-  const shipRotation = useRef(0)
 
   const cursor = useRef([15,0,0])
   const spotLight = useRef()
@@ -80,7 +78,7 @@ export default function World() {
         }
         const scaledCoordinates = scaleCoordinates(el, scaleFactor, pointOfInterest)
         return (
-          <mesh position={[0, 40 - yIndex, -60 - ((xIndex * 20) + Math.random() * 2)]}>
+          <mesh position={[0, 40 - yIndex, -68 - ((xIndex * 20) + Math.random() * 2)]}>
             <Line points={scaledCoordinates} color="red" />
             <FixedModel scale={[10,10,10]} size={[7, 12, 7]} position={[-50, 174, 9]} fixed model={'/models/postit.gltf'} />
           </mesh>
@@ -89,10 +87,6 @@ export default function World() {
       setPostIts(vectors)
     }
   }
-
-  useFrame(() => {
-    shipRotation.current += 0.01
-  })
 
   useEffect(() => {
     axios.get('/drawings').then((res) => setDrawingsCallback(res))
@@ -106,16 +100,16 @@ export default function World() {
           <Floor cursor={cursor} color={'white'} position={[0,0,0]} />
             <Floor cursor={cursor} color={'white'} position={[0, 0, -100]}/>
             <Floor cursor={cursor} color={'white'} position={[0, 0, -200]}/>
-            {/* <Shaders /> */}
             {postIts.length > 0 && postIts}
-            <ShaderModel fragment={hologramFragment} vertex={hologramVertex} position={[-30,5,30]} rotation={[0,-3* Math.PI / 4, 0]} scale={10} model={'/models/prop_cannon.gltf'} modelName={'Prop_Cannon'}/>
-            <ShaderModel fragment={newHalftoneFragment} vertex={halftoneVertex} position={[-30,12,0]} rotation={[0,0, 0]} scale={3} model={'/models/spaceship.gltf'} modelName={'Spaceship_FernandoTheFlamingo'}/>
+            <Collisions />
+            <ShaderModel fragment={hologramFragment} vertex={hologramVertex} position={[-30,12,0]} rotation={[0,0, 0]} scale={3}  model={'/models/spaceship.gltf'} modelName={'Spaceship_FernandoTheFlamingo'}/>
+            <ShaderModel fragment={newHalftoneFragment} vertex={halftoneVertex} position={[-30,5,30]} rotation={[0,-3* Math.PI / 4, 0]} scale={10} model={'/models/prop_cannon.gltf'} modelName={'Prop_Cannon'}/>
             <FixedModel onClick={() => setOnWall((prev) => !prev)} fixed position={[-50, 50, 9]} model={'/models/postit.gltf'} scale={[10,10,10]} size={[7, 12, 7]} />
             <Model scale={[10,10,10]} size={[7, 15, 7]} position={[0,7,-20]} model={'/models/soda.gltf'} />
             <FixedModel fixed scale={[7,7,7]} size={[7, 15, 7]} rotation={[0, Math.PI / 2, 0]} position={[30,6,-90]} model={'/models/keyboard.gltf'} />
             <FixedModel fixed scale={[4,4,4]} rotation={[0, Math.PI / 2, 0]} position={[30,2,-130]} model={'/models/mouse.gltf'} />
             <Wall position={[-43, 40, -98.7]} onScreen={onScreen} url={"https://windows-homepage.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[121.5, 66.5]} rotation={[0,0,0]} setOnScreen={setOnScreen}/>
-            <Screen2 position={[-13, 50.5, -226.5]} onScreen={onScreen} url={"https://lliam-resume.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[50, 93]} rotation={[0.012,-0.972,0]} setOnScreen={setOnScreen}/>
+            <Screen2 position={[-13, 50.5, -226.5]} onScreen={onScreen} url={"https://elegant-panda-184d83.netlify.app/"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[50, 93]} rotation={[0.012,-0.972,0]} setOnScreen={setOnScreen}/>
             <Painting position={[-60, 174, 9]} size={[95, 110]} rotation={[0,0,0]} setDrawingsCallback={setDrawingsCallback} />
             <Ball cursor={cursor} spotLight={spotLight} onScreen={onScreen} onScreen2={onScreen2} onWall={onWall}/>
             {pins.coords.map((el, i) => <Model key={`pin-${i}`} size={[1, 3, 1]} position={[el[0] - 41, el[1] + 20, el[2] + 141]} model={'/models/pin.gltf'} />)}
