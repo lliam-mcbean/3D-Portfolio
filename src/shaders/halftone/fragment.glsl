@@ -29,7 +29,7 @@ void main()
 {
     vec3 viewDirection = normalize(vPosition - cameraPosition);
     vec3 normal = normalize(vNormal);
-    vec3 color = vec3(0.3608, 0.302, 1.0);
+    vec3 color = vec3(188.0 / 255.0, 128.0 / 255.0, 154.0 / 255.0);
 
     // lights
     vec3 light = vec3(0.0);
@@ -57,7 +57,7 @@ void main()
         vec3(0.0, -1.0, 0.0),
         -0.8, 
         1.5,
-        vec3(0.055, 0.212, 0.847), 
+        vec3( 255.0 / 242.0, 255.0 / 112.0, 255.0 / 112.0), 
         normal
     );
 
@@ -67,7 +67,7 @@ void main()
         vec3(0.0, 1.0, 0.0),
         -0.8, 
         1.5,
-        vec3(0.2235, 0.7843, 0.251), 
+        vec3( 255.0 / 242.0, 255.0 / 112.0, 255.0 / 112.0), 
         normal
     );
 

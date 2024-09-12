@@ -20,7 +20,7 @@ export default function ShaderModel({fragment, vertex, position, rotation, model
           uTime: {
             value: 0.0,
           },
-          uColor: {value: new THREE.Color('green')},
+          uColor: {value: new THREE.Color('#fe976c')},
           uResolution: {value: new THREE.Vector2(sizes.width * sizes.pixelRatio, sizes.height * sizes.pixelRatio)},
         }), [sizes.width, sizes.pixelRatio, sizes.height]
       );

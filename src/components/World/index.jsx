@@ -8,7 +8,6 @@ import {pins} from '../../data/pins'
 import Wall from './Wall'
 import Desk from './Desk'
 import Lights from '../Lights'
-import Sky from './Sky'
 import Painting from './Painting'
 import { Line } from '@react-three/drei'
 import axios from 'axios'
@@ -95,7 +94,6 @@ export default function World() {
   return (
       <Suspense fallback={null}>
         <Lights spotLight={spotLight} />
-        <Sky />
         <Physics gravity={[0, -40, 0]}>
           <Floor cursor={cursor} color={'white'} position={[0,0,0]} />
             <Floor cursor={cursor} color={'white'} position={[0, 0, -100]}/>
