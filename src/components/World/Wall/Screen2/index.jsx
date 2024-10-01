@@ -23,7 +23,7 @@ export default function Screen2({position, url, size, rotation, setOnScreen, htm
         {onScreen &&
         <Html position={[-2.5, -0.5, 0]} rotation={[0, 0, -0.005]} transform scale={5} >
           <div className='overflow-hidden  relative'>
-            <iframe title='screen1' style={{border: 'inset'}} className='w-[428px] h-[733px]' src={url} frameborder="0"></iframe>
+            <iframe title='screen1' className='w-[428px] h-[733px]' src={url} frameborder="0"></iframe>
           </div>
         </Html>
         }

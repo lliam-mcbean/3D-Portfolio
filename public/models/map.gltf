@@ -1,0 +1,108 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v3.2.43",
+        "version" : "2.0"
+    },
+    "extensionsUsed" : [
+        "KHR_draco_mesh_compression"
+    ],
+    "extensionsRequired" : [
+        "KHR_draco_mesh_compression"
+    ],
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Cube.077",
+            "scale" : [
+                0.38777846097946167,
+                8.498147010803223,
+                13.689241409301758
+            ],
+            "translation" : [
+                -27.105236053466797,
+                12.348800659179688,
+                -21.977296829223633
+            ]
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Cube.062",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 0,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1,
+                                "TEXCOORD_0" : 2
+                            }
+                        }
+                    },
+                    "indices" : 3,
+                    "mode" : 4
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "componentType" : 5126,
+            "count" : 88,
+            "max" : [
+                0.9930483102798462,
+                0.9930483102798462,
+                0.9930483102798462
+            ],
+            "min" : [
+                -0.9930483102798462,
+                -0.9930483102798462,
+                -0.9930483102798462
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 88,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 88,
+            "type" : "VEC2"
+        },
+        {
+            "componentType" : 5123,
+            "count" : 162,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 591,
+            "byteOffset" : 0
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 592,
+            "uri" : "data:application/octet-stream;base64,RFJBQ08CAgEBAAAAWDYCNgEBGwcBFN/3fd/3fd/3fd+7rkuryvd93/cB/wJZQf8CuUL/ArlCA/8AAAAAAAEAAAEACQMAAAIBAQkDAAEDAQMJAgACAgEBAQEE+z1tKaUDKQP/////////////////FzECdQF8vP////////////////8f4QMdBP/////////////////////////////////////////////////////////////////////////////LQED4//////////////////////////////////////////////////+vQDkBRjv2J9niHjyyRnwONp3vaExzraPTpK8YE6NxPoCmgxPl/6b07bTQ0rt5PfesKNuPZmFoaR6dzd7+S9X/TbMKxPNl7criUE8AAAAA/z8AAGo4fr9qOH6/ajh+v2o4/j8OAAMBAQP/B2E4//////////ddBHUB//////////PRARJ819ntlwi78hy+47T7f6NFKYH/AwAA/wEAAAoBAQEADQNdFAN1AdEFBwEIGRW8vAPRBRyKJppVQUbX8DQypE0CEKkz1oeB5/x6Wevkd/iJgWhCqogC6yaK6CYrAq4impCyKeAqoiiiAu4my3zvh5sAnKhzHm4CcLJQyY6oCZAJgI/uJwEpAAIDnwCkgJwABKAAo/jmJujAKMBhYukKAAA8oHaTjo4CYLwUSzo6CgBBAKOjAKTc+VAocgJswvdMMToKQAqCpIyOApACAAAAAP8PAABmLpu7AJyIOhXUgD8MAA=="
+        }
+    ]
+}

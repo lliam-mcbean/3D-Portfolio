@@ -1,15 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Line, Html } from '@react-three/drei'
+import { Line, Html, Outlines } from '@react-three/drei'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import * as THREE from 'three'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function Painting({position, size, rotation, setDrawingsCallback}) {
   const [isDrawing, setIsDrawing] = useState(false)
   // eslint-disable-next-line
   const [userDrawings, setUserDrawings] = useState([])
   const [drawing, setDrawing] = useState([])
+  
 
   useEffect(() => {
     axios.get('/drawings').then((res) => {
@@ -52,8 +54,9 @@ export default function Painting({position, size, rotation, setDrawingsCallback}
     })} position={position} rotation={[rotation[0], (Math.PI / 2) + rotation[1], rotation[2]]}>
        <planeGeometry args={size} />
        <meshBasicMaterial />
+       <Outlines color='lime' thickness={80}/>
       </mesh>
-      <Html position={[position[0], position[1] - 70, position[2] - 50]} rotation={[rotation[0], (Math.PI / 2) - rotation[1], rotation[2]]}>
+      <Html transform scale={[10,10,10]} position={[position[0], position[1] - 70, position[2] + 35]} rotation={[rotation[0], (Math.PI / 2) - rotation[1], rotation[2]]}>
         <div className='flex'>
           <div className='p-2 mx-2 border border-2 rounded cursor-pointer text-white hover:text-red-500 ' onClick={() => setDrawing([])}>
             <FontAwesomeIcon icon={faTrash} />
