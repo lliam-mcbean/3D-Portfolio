@@ -1,7 +1,6 @@
 import React from 'react'
 import FocusItem from './FocusItem'
 import { useGLTF } from '@react-three/drei'
-import LightBugParticles from './Lightbug'
 
 
 export default function Desk({position,  model, tweenCamera, setOnScreen }) {

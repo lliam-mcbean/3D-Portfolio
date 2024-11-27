@@ -2,7 +2,6 @@ import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
 import Loader from "./components/Loader";
 import World from "./components/World";
-import { animated, useSpring } from "@react-spring/three";
 import axios from 'axios'
 import { DrawingProvider } from "./components/context/drawing";
 
