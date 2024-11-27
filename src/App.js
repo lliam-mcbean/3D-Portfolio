@@ -2,7 +2,9 @@ import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
 import Loader from "./components/Loader";
 import World from "./components/World";
+import { animated, useSpring } from "@react-spring/three";
 import axios from 'axios'
+import { DrawingProvider } from "./components/context/drawing";
 
 axios.defaults.baseURL = 'https://wasteful-gloriana-lliammcbean-f43f8812.koyeb.app/'
 
@@ -12,8 +14,10 @@ function App() {
   return (
     <div className='w-screen h-screen overflow-hidden bg-black'>
       <div className="w-screen h-screen absolute">
-        <Canvas colorManagement shadows camera={{position: [50, 30, 50], far: 5000}}>
-          <World />
+        <Canvas colorManagement shadows camera={{position: [50, 30, 50], far: 5000}}> 
+          <DrawingProvider>
+            <World isLoading={isLoading}/>
+          </DrawingProvider>
         </Canvas>
       </div>
       {isLoading && <Loader setIsLoading={setIsLoading} />}

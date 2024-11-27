@@ -4,10 +4,11 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import * as THREE from 'three'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { useDrawing } from '../../context/drawing'
 
 
 export default function Painting({position, size, rotation, setDrawingsCallback}) {
-  const [isDrawing, setIsDrawing] = useState(false)
+  const {isDrawing, setIsDrawing} = useDrawing()
   // eslint-disable-next-line
   const [userDrawings, setUserDrawings] = useState([])
   const [drawing, setDrawing] = useState([])

@@ -1,7 +1,9 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import React from 'react'
+import { useFrame } from '@react-three/fiber'
+import React, { useEffect } from 'react'
 
 export default function CustomCamera({cameraRef, isOrbit}) {
+
 
 
   return (
@@ -9,7 +11,7 @@ export default function CustomCamera({cameraRef, isOrbit}) {
         <PerspectiveCamera
         ref={cameraRef}
         makeDefault
-        position={[0, 0, 5]}
+        position={[766.906246058396, 627.6159956734383, 456.2554359120952]}
         rotation={[0, 0, 0]}
         />
         {isOrbit && <OrbitControls 
