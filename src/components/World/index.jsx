@@ -25,6 +25,7 @@ import CustomCamera from './CustomCamera'
 import { gsap } from 'gsap/gsap-core'
 import TopoMap from './Desk/TopoMap'
 import { useSpring, animated, easings } from '@react-spring/three'
+import { useExplore } from '../context/explore'
 
 const newHalftoneFragment = `
   ${ambientLight}
@@ -35,7 +36,7 @@ const newHalftoneFragment = `
 
 export default function World({isLoading}) {
   const [onScreen, setOnScreen] = useState(false)
-  const [explore, setExplore] = useState(false)
+  const {explore, setExplore} = useExplore()
   const [onScreen2, setOnScreen2] = useState(false)
   const [postIts, setPostIts] = useState([])
   const [isOrbit, setIsOrbit] = useState(true)
@@ -96,6 +97,7 @@ export default function World({isLoading}) {
     let xIndex = 0
     if (res.status === 200) {
       const vectors = res.data.map((el, i) => {
+        console.log('this is the element: ', el)
         let scaleFactor = 0.15;
         let pointOfInterest = [-47.5, 174, 9];
         if (i !== 0) {
@@ -104,6 +106,13 @@ export default function World({isLoading}) {
         if (i % 3 === 0 && i !== 0) {
           yIndex += 22
           xIndex = 0
+        }
+        if (el.length === 0) {
+          return (
+            <mesh position={[-10, 40 - yIndex, -68 - ((xIndex * 20) + Math.random() * 2)]}>
+              <FixedModel scale={[10,10,10]} size={[7, 12, 7]} position={[-50, 174, 9]} fixed model={'/models/postit.gltf'} />
+            </mesh>
+          )
         }
         const scaledCoordinates = scaleCoordinates(el, scaleFactor, pointOfInterest)
         return (
@@ -121,8 +130,6 @@ export default function World({isLoading}) {
     axios.get('/drawings').then((res) => setDrawingsCallback(res))
     /* eslint-disable-next-line*/
   }, [])
-
-  console.log('this is the screen', onScreen)
 
   return (
       <Suspense fallback={null}>
@@ -144,7 +151,7 @@ export default function World({isLoading}) {
                 <Model scale={[10,10,10]} size={[7, 15, 7]} position={[0,7,-20]} model={'/models/soda.gltf'} />
                 <FixedModel fixed scale={[7,7,7]} size={[7, 15, 7]} rotation={[0, Math.PI / 2, 0]} position={[30,6,-90]} model={'/models/keyboard.gltf'} />
                 <FixedModel fixed scale={[4,4,4]} rotation={[0, Math.PI / 2, 0]} position={[30,2,-130]} model={'/models/mouse.gltf'} />
-                <Wall setExplore={setExplore} position={[-43, 40, -98.7]} onScreen={onScreen} url={"https://windows-homepage.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[121.5, 66.5]} rotation={[0,0,0]} setOnScreen={setOnScreen}/>
+                <Wall position={[-41, 40, -98.7]} onScreen={onScreen} url={"https://windows-homepage.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[121.5, 66.5]} rotation={[0,0,0]} setOnScreen={setOnScreen}/>
                 {/* <Screen2 position={[-13, 50.5, -226.5]} onScreen={onScreen} url={"https://elegant-panda-184d83.netlify.app/"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[50, 93]} rotation={[0.012,-0.972,0]} setOnScreen={setOnScreen}/> */}
                 <Painting position={[-57, 174, 9]} size={[90, 103]} rotation={[0,0,0]} setDrawingsCallback={setDrawingsCallback} />
                 <Ball explore={explore} cursor={cursor} spotLight={spotLight} onScreen={onScreen} onScreen2={onScreen2}/>

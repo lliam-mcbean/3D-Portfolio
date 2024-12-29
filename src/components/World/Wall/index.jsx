@@ -4,7 +4,7 @@ import { useLoader } from '@react-three/fiber'
 import React, { useEffect, useState } from 'react'
 import { TextureLoader } from 'three'
 
-export default function Wall({position, url, size, rotation, setOnScreen, htmlPosition, onScreen, setExplore}) {
+export default function Wall({position, url, size, rotation, setOnScreen, htmlPosition, onScreen}) {
   const screenmap = useLoader(TextureLoader, './textures/login.png')
   const [cursor, setCursor] = useState(false)
 
@@ -25,12 +25,6 @@ export default function Wall({position, url, size, rotation, setOnScreen, htmlPo
         <Html position={htmlPosition} transform scale={5}>
           <div className='overflow-hidden w-[970px] relative'>
             <iframe title='screen1' className='w-[990px] border-none  h-[540px]' src={url} frameborder="0"></iframe>
-          </div>
-          <div onClick={() => {
-            setOnScreen(false)
-            setExplore(true)
-            }} className='cursor-pointer absolute w-[150px] top-0 left-[-200px] p-4 text-2xl text-center border border-2 border-white rounded text-white'>
-            EXPLORE THE DESK
           </div>
         </Html>
         }
