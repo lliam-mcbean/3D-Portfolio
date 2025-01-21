@@ -1,5 +1,5 @@
 import { Physics } from '@react-three/cannon'
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import Floor from './Floor'
 import Ball from './Ball'
 import { useRef } from 'react'
@@ -9,8 +9,6 @@ import Wall from './Wall'
 import Desk from './Desk'
 import Lights from '../Lights'
 import Painting from './Painting'
-import { Line } from '@react-three/drei'
-import axios from 'axios'
 import FixedModel from './FixedModel'
 import ShaderModel from './ShaderModel'
 import hologramFragment from '../../shaders/hologram/fragment.glsl'
@@ -26,6 +24,7 @@ import { gsap } from 'gsap/gsap-core'
 import TopoMap from './Desk/TopoMap'
 import { useSpring, animated, easings } from '@react-spring/three'
 import { useExplore } from '../context/explore'
+import { useDrawing } from '../context/drawing'
 
 const newHalftoneFragment = `
   ${ambientLight}
@@ -38,12 +37,13 @@ export default function World({isLoading}) {
   const [onScreen, setOnScreen] = useState(false)
   const {explore, setExplore} = useExplore()
   const [onScreen2, setOnScreen2] = useState(false)
-  const [postIts, setPostIts] = useState([])
   const [isOrbit, setIsOrbit] = useState(true)
 
   const cursor = useRef([15,0,0])
   const cameraRef = useRef()
   const spotLight = useRef()
+
+  const {postIts} = useDrawing()
 
   const { scale, rotation } = useSpring({
     scale: isLoading ? [0, 0, 0] : [1, 1, 1],
@@ -70,67 +70,6 @@ export default function World({isLoading}) {
     });
   };
 
-  function scaleCoordinates(coordinates, scaleFactor, pointOfInterest) {
-    let translatedCoordinates = coordinates.map(coord => [
-        coord[0] - pointOfInterest[0],
-        coord[1] - pointOfInterest[1],
-        coord[2] - pointOfInterest[2]
-    ]);
-
-    let scaledCoordinates = translatedCoordinates.map(coord => [
-        coord[0] * scaleFactor,
-        coord[1] * scaleFactor,
-        coord[2] * scaleFactor
-    ]);
-
-    let finalCoordinates = scaledCoordinates.map(coord => [
-        coord[0] + pointOfInterest[0],
-        coord[1] + pointOfInterest[1],
-        coord[2] + pointOfInterest[2]
-    ]);
-
-    return finalCoordinates;
-  }
-
-  const setDrawingsCallback = (res) => {
-    let yIndex = 0
-    let xIndex = 0
-    if (res.status === 200) {
-      const vectors = res.data.map((el, i) => {
-        console.log('this is the element: ', el)
-        let scaleFactor = 0.15;
-        let pointOfInterest = [-47.5, 174, 9];
-        if (i !== 0) {
-          xIndex += 1
-        }
-        if (i % 3 === 0 && i !== 0) {
-          yIndex += 22
-          xIndex = 0
-        }
-        if (el.length === 0) {
-          return (
-            <mesh position={[-10, 40 - yIndex, -68 - ((xIndex * 20) + Math.random() * 2)]}>
-              <FixedModel scale={[10,10,10]} size={[7, 12, 7]} position={[-50, 174, 9]} fixed model={'/models/postit.gltf'} />
-            </mesh>
-          )
-        }
-        const scaledCoordinates = scaleCoordinates(el, scaleFactor, pointOfInterest)
-        return (
-          <mesh position={[-10, 40 - yIndex, -68 - ((xIndex * 20) + Math.random() * 2)]}>
-            <Line points={scaledCoordinates} color="red" />
-            <FixedModel scale={[10,10,10]} size={[7, 12, 7]} position={[-50, 174, 9]} fixed model={'/models/postit.gltf'} />
-          </mesh>
-        )
-      })
-      setPostIts(vectors)
-    }
-  }
-
-  useEffect(() => {
-    axios.get('/drawings').then((res) => setDrawingsCallback(res))
-    /* eslint-disable-next-line*/
-  }, [])
-
   return (
       <Suspense fallback={null}>
         <Lights spotLight={spotLight} />
@@ -153,7 +92,7 @@ export default function World({isLoading}) {
                 <FixedModel fixed scale={[4,4,4]} rotation={[0, Math.PI / 2, 0]} position={[30,2,-130]} model={'/models/mouse.gltf'} />
                 <Wall position={[-41, 40, -98.7]} onScreen={onScreen} url={"https://windows-homepage.netlify.app"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[121.5, 66.5]} rotation={[0,0,0]} setOnScreen={setOnScreen}/>
                 {/* <Screen2 position={[-13, 50.5, -226.5]} onScreen={onScreen} url={"https://elegant-panda-184d83.netlify.app/"} onScreen2={onScreen2} setOnScreen2={setOnScreen2} size={[50, 93]} rotation={[0.012,-0.972,0]} setOnScreen={setOnScreen}/> */}
-                <Painting position={[-57, 174, 9]} size={[90, 103]} rotation={[0,0,0]} setDrawingsCallback={setDrawingsCallback} />
+                <Painting position={[-57, 174, 9]} size={[90, 103]} rotation={[0,0,0]} />
                 <Ball explore={explore} cursor={cursor} spotLight={spotLight} onScreen={onScreen} onScreen2={onScreen2}/>
                 {pins.coords.map((el, i) => <Model key={`pin-${i}`} size={[1, 3, 1]} position={[el[0] - 41, el[1] + 20, el[2] + 141]} model={'/models/pin.gltf'} />)}
                 <Desk setOnScreen={setOnScreen} tweenCamera={tweenCamera} size={[100,100,100]} position={[-10,0,5]} model={'/models/desk.gltf'} />

@@ -10,7 +10,6 @@ export default function ShaderModel({fragment, vertex, position, rotation, model
         height: window.innerHeight,
         pixelRatio: Math.min(window.devicePixelRatio, 2)
     }
-    console.log(gltf)
     const geometry = gltf.nodes[modelName].geometry
 
     const shaderRef = useRef()

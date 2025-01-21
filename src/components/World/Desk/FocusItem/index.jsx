@@ -3,10 +3,8 @@ import React, { useState } from 'react'
 import { useDrawing } from '../../../context/drawing'
 
 export default function FocusItem({model, title, position, tweenCamera, nodeString, rotation, callback, tweenPosition, tweenRotation}) {
-    const [hovered, hover] = useState(false)
-    const {isDrawing} = useDrawing()
-
-    console.log('this is the ccallback', callback)
+  const [hovered, hover] = useState(false)
+  const {isDrawing} = useDrawing()
 
   return (
     <mesh onClick={() => {

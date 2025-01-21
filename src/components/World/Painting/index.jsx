@@ -1,42 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Line, Html, Outlines } from '@react-three/drei'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import * as THREE from 'three'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useDrawing } from '../../context/drawing'
 
 
-export default function Painting({position, size, rotation, setDrawingsCallback}) {
+export default function Painting({position, size, rotation }) {
   const {isDrawing, setIsDrawing} = useDrawing()
-  // eslint-disable-next-line
-  const [userDrawings, setUserDrawings] = useState([])
-  const [drawing, setDrawing] = useState([])
+  const {drawing, submitDrawing, setDrawing} = useDrawing()
   
-
-  useEffect(() => {
-    axios.get('/drawings').then((res) => {
-      if (res.status === 200) {
-        setUserDrawings(res.data)
-      }
-    })
-  }, [])
-
-  const convertCoords = (coords) => {
-    const returnValue = coords.map((el) => [el.x, el.y, el.z])
-    return returnValue
-  }
-
-  const submitDrawing = () => {
-    const convertedCoords = convertCoords(drawing)
-    axios.post('/drawings', {data: convertedCoords}).then((res) => {
-      if (res.status === 200) {
-        axios.get('/drawings').then((res) => setDrawingsCallback(res))
-        setDrawing([])
-      }
-    })
-  }
-
   return (
     <>
     <mesh
